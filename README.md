@@ -21,3 +21,8 @@ Some links for reference:
 ./service help # Lists available commands and options (same as docker-compose help)
 
 ```
+
+## Endpoints
+
+- [elasticsearh](http://localhost:9200)
+- [kibana](http://localhost:5601)
