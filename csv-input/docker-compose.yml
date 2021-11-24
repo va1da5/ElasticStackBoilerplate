@@ -1,7 +1,7 @@
 version: "3"
 services:
     elasticsearch:
-        image: docker.elastic.co/elasticsearch/elasticsearch:7.8.0
+        image: docker.elastic.co/elasticsearch/elasticsearch:7.15.2
         container_name: elasticsearch
         environment:
             - discovery.type=single-node
@@ -10,8 +10,7 @@ services:
             - http.cors.allow-headers=X-Requested-With,X-Auth-Token,Content-Type,Content-Length,Authorization
             - http.cors.allow-credentials=true
         volumes:
-        #   - $PWD/elasticsearch/esdata:/usr/share/elasticsearch/data
-          - "esdata:/usr/share/elasticsearch/data"
+            - "esdata:/usr/share/elasticsearch/data"
         networks:
             - elastic
         ports:
@@ -20,7 +19,7 @@ services:
         restart: always
 
     kibana:
-        image: docker.elastic.co/kibana/kibana:7.8.0
+        image: docker.elastic.co/kibana/kibana:7.15.2
         container_name: kibana
         environment:
             SERVER_NAME: localhost
@@ -33,15 +32,13 @@ services:
             - elastic
 
     logstash:
-        image: docker.elastic.co/logstash/logstash:7.8.0
+        image: docker.elastic.co/logstash/logstash:7.15.2
         container_name: logstash
         environment:
             - node.name=logstash
         volumes:
-            - "$PWD/logstash/pipeline:/usr/share/logstash/pipeline"
-            - "$PWD/logstash/data:/tmp/data"
-        ports:
-            - 8801:8801
+            - "./logstash/pipeline:/usr/share/logstash/pipeline"
+            - "./logstash/data:/tmp/data"
         links:
             - elasticsearch
         networks:
@@ -49,7 +46,7 @@ services:
         restart: always
 
 networks:
-    elastic:
+    elastic: null
 
 volumes:
-    esdata:
+    esdata: null
